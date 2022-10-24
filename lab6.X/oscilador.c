@@ -10,6 +10,6 @@
 #include "oscilador.h"
 
 void osc(void){
-    OSCCONbits.IRCF = 0b111; //4 MHz
+    OSCCONbits.IRCF = 0b111; //8 MHz
     OSCCONbits.SCS = 1;
 }

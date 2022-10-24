@@ -28,3 +28,56 @@
 #include "oscilador.h"
 
 #define _XTAL_FREQ 8000000
+
+unsigned int i;
+
+
+void setup(void);
+void setupUART(void);
+
+
+
+
+
+void main(void){
+    setup();
+    setupUART();
+    while(1){
+        if(TXSTAbits.TRMT == 1){
+            TXREG = 33;}   
+           
+        if(PIR1bits.RCIF == 1){
+            PORTB = RCREG;
+            PIR1bits.RCIF = 0;}
+            
+            __delay_ms(50); 
+    }
+}
+
+void setup(void){
+    ANSEL = 0;
+    ANSELH = 0;
+    TRISB = 0;
+    PORTB = 0;
+    TRISD = 0;
+    PORTD = 0;
+}
+
+void setupUART(void){
+    // Paso 1: configurar velocidad baud rate
+    
+    SPBRG = 12;
+    
+    // Paso 2:
+    
+    TXSTAbits.SYNC = 0;         // Modo Asíncrono
+    RCSTAbits.SPEN = 1;         // Habilitar UART
+    
+    // Paso 3:
+    // Usar 8 bits
+    
+    // Paso 4:
+    TXSTAbits.TXEN = 1;         // Habilitamos la transmision
+    PIR1bits.TXIF = 0;
+    RCSTAbits.CREN = 1;         // Habilitamos la recepcion
+}
