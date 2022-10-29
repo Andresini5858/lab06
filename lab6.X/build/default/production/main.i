@@ -2653,20 +2653,16 @@ void osc(void);
 
 unsigned int i;
 
-
 void setup(void);
 void setupUART(void);
-
-
-
-
+void cadena(char *cursor);
 
 void main(void){
     setup();
     setupUART();
+    cadena("MENU\rHOLA");
+    cadena("HOLA");
     while(1){
-        if(TXSTAbits.TRMT == 1){
-            TXREG = 33;}
 
         if(PIR1bits.RCIF == 1){
             PORTB = RCREG;
@@ -2675,6 +2671,8 @@ void main(void){
             _delay((unsigned long)((50)*(8000000/4000.0)));
     }
 }
+
+
 
 void setup(void){
     ANSEL = 0;
@@ -2702,4 +2700,12 @@ void setupUART(void){
     TXSTAbits.TXEN = 1;
     PIR1bits.TXIF = 0;
     RCSTAbits.CREN = 1;
+}
+
+void cadena(char *cursor){
+    while (*cursor != '\0'){
+        while (PIR1bits.TXIF == 0);
+            TXREG = *cursor;
+            *cursor++;
+    }
 }

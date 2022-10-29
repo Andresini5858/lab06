@@ -25,51 +25,125 @@
 #pragma config WRT = OFF        // Flash Program Memory Self Write Enable bits (Write protection off)
 
 #include <xc.h>
-#include "oscilador.h"
+#include <stdio.h>
 
 #define _XTAL_FREQ 8000000
 
+int ascii[10] = {0, 1, 2, 3, 4, 5, 7, 8, 9};
 unsigned int i;
-
+unsigned char pointer;
+unsigned char bandera;
+unsigned char selector;
+unsigned char flag;
+unsigned int centena;
+unsigned int decena;
+unsigned int unidad;
+unsigned int pot;
 
 void setup(void);
+void setupADC(void);
 void setupUART(void);
+void cadena(char *cursor);
+void escribir(char *cursor);
 
-
-
-
+void __interrupt() isr(void){
+    if (PIR1bits.ADIF == 1){
+        pot = ADRESH;
+        centena = (pot/100);
+        decena = ((pot/10)%10); 
+        unidad = (pot%10);
+        PIR1bits.ADIF = 0;
+        }
+    
+}
 
 void main(void){
     setup();
-    setupUART();
-    while(1){
-        if(TXSTAbits.TRMT == 1){
-            TXREG = 33;}   
-           
-        if(PIR1bits.RCIF == 1){
-            PORTB = RCREG;
-            PIR1bits.RCIF = 0;}
+    setupADC();
+    setupUART();       
+    while(1){ 
+        cadena("\r-------------MENU------------------\r1) Leer Potenciometro\r2) Enviar ASCII\r");
+        bandera = 1;
+        while (bandera == 1){
+                if (PIR1bits.RCIF == 1){
+                selector = RCREG;
+                PIR1bits.RCIF = 0;
+                __delay_ms(10);}
+            if (selector == '1'){
+                ADCON0bits.GO = 1;
+                __delay_ms(5);
+                TXREG = ascii[centena]+48;
+                __delay_ms(5);
+                TXREG = ascii[decena]+48;
+                __delay_ms(5);
+                TXREG = ascii[unidad]+48;
+                bandera = 0;
+                selector = 0;
+            }
             
-            __delay_ms(50); 
+            if (selector == '2'){
+                cadena("Ingrese caracter\r");
+                cadena("\r");
+                flag = 1;
+                RCREG = 0;
+                while (flag == 1){
+                while (RCREG != '\0'){
+                while (PIR1bits.TXIF == 0);    
+                TXREG = RCREG;
+                if (RCREG == 13){
+                PORTB = RCREG;
+                PIR1bits.RCIF = 0;
+                bandera = 0;
+                selector = 0;
+                flag = 0;}
+                RCREG = '\0';
+                }}
+            }        
+        }
     }
 }
 
 void setup(void){
-    ANSEL = 0;
+    ANSEL = 0b00000001;
     ANSELH = 0;
     TRISB = 0;
     PORTB = 0;
     TRISD = 0;
     PORTD = 0;
+    
+    OSCCONbits.IRCF = 0b111;
+    OSCCONbits.SCS = 1;
+    
+    INTCONbits.GIE = 1; //Activar interrupciones globales
+    INTCONbits.PEIE = 1; //Activar interrupciones periféricas
+    PIE1bits.ADIE = 1; // Habiliar interrupcion del conversor ADC
+    PIR1bits.ADIF = 0; // Limpiar bandera de interrupción del ADC
+    PIE1bits.RCIE = 0;
+}
+
+void setupADC(void){
+    ADCON0bits.ADCS1 = 1; // Fosc/2        
+    ADCON0bits.ADCS0 = 0; // =======      
+    
+    ADCON1bits.VCFG1 = 0; // Referencia VSS (0 Volts)
+    ADCON1bits.VCFG0 = 0; // Referencia VDD (5 Volts)
+    
+    ADCON1bits.ADFM = 0;  // Justificado hacia izquierda
+    
+    ADCON0bits.CHS3 = 0; // Canal AN0
+    ADCON0bits.CHS2 = 0;
+    ADCON0bits.CHS1 = 0;
+    ADCON0bits.CHS0 = 0;        
+    
+    ADCON0bits.ADON = 1; // Habilitamos el ADC
+    __delay_us(100); //delay de 100 us
 }
 
 void setupUART(void){
     // Paso 1: configurar velocidad baud rate
-    
     SPBRG = 12;
     
-    // Paso 2:
-    
+    // Paso 2:    
     TXSTAbits.SYNC = 0;         // Modo Asíncrono
     RCSTAbits.SPEN = 1;         // Habilitar UART
     
@@ -80,4 +154,12 @@ void setupUART(void){
     TXSTAbits.TXEN = 1;         // Habilitamos la transmision
     PIR1bits.TXIF = 0;
     RCSTAbits.CREN = 1;         // Habilitamos la recepcion
+}
+
+void cadena(char *cursor){
+    while (*cursor != '\0'){
+        while (PIR1bits.TXIF == 0);
+            TXREG = *cursor;
+            *cursor++;  
+    }
 }
