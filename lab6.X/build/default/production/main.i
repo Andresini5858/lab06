@@ -2643,44 +2643,211 @@ extern __bank0 __bit __timeout;
 # 29 "E:/Program Files/Microchip/MPLABX/v6.00/packs/Microchip/PIC16Fxxx_DFP/1.3.42/xc8\\pic\\include\\xc.h" 2 3
 # 27 "main.c" 2
 
-# 1 "./oscilador.h" 1
-# 16 "./oscilador.h"
-void osc(void);
+# 1 "E:\\Program Files\\Microchip\\xc8\\v2.40\\pic\\include\\c90\\stdio.h" 1 3
+
+
+
+# 1 "E:/Program Files/Microchip/MPLABX/v6.00/packs/Microchip/PIC16Fxxx_DFP/1.3.42/xc8\\pic\\include\\__size_t.h" 1 3
+
+
+
+typedef unsigned size_t;
+# 4 "E:\\Program Files\\Microchip\\xc8\\v2.40\\pic\\include\\c90\\stdio.h" 2 3
+
+# 1 "E:/Program Files/Microchip/MPLABX/v6.00/packs/Microchip/PIC16Fxxx_DFP/1.3.42/xc8\\pic\\include\\__null.h" 1 3
+# 5 "E:\\Program Files\\Microchip\\xc8\\v2.40\\pic\\include\\c90\\stdio.h" 2 3
+
+
+
+
+
+
+# 1 "E:\\Program Files\\Microchip\\xc8\\v2.40\\pic\\include\\c90\\stdarg.h" 1 3
+
+
+
+
+
+
+typedef void * va_list[1];
+
+#pragma intrinsic(__va_start)
+extern void * __va_start(void);
+
+#pragma intrinsic(__va_arg)
+extern void * __va_arg(void *, ...);
+# 11 "E:\\Program Files\\Microchip\\xc8\\v2.40\\pic\\include\\c90\\stdio.h" 2 3
+# 43 "E:\\Program Files\\Microchip\\xc8\\v2.40\\pic\\include\\c90\\stdio.h" 3
+struct __prbuf
+{
+ char * ptr;
+ void (* func)(char);
+};
+# 85 "E:\\Program Files\\Microchip\\xc8\\v2.40\\pic\\include\\c90\\stdio.h" 3
+# 1 "E:\\Program Files\\Microchip\\xc8\\v2.40\\pic\\include\\c90\\conio.h" 1 3
+
+
+
+
+
+
+
+# 1 "E:\\Program Files\\Microchip\\xc8\\v2.40\\pic\\include\\c90\\errno.h" 1 3
+# 29 "E:\\Program Files\\Microchip\\xc8\\v2.40\\pic\\include\\c90\\errno.h" 3
+extern int errno;
+# 8 "E:\\Program Files\\Microchip\\xc8\\v2.40\\pic\\include\\c90\\conio.h" 2 3
+
+
+
+
+extern void init_uart(void);
+
+extern char getch(void);
+extern char getche(void);
+extern void putch(char);
+extern void ungetch(char);
+
+extern __bit kbhit(void);
+
+
+
+extern char * cgets(char *);
+extern void cputs(const char *);
+# 85 "E:\\Program Files\\Microchip\\xc8\\v2.40\\pic\\include\\c90\\stdio.h" 2 3
+
+
+
+extern int cprintf(char *, ...);
+#pragma printf_check(cprintf)
+
+
+
+extern int _doprnt(struct __prbuf *, const register char *, register va_list);
+# 180 "E:\\Program Files\\Microchip\\xc8\\v2.40\\pic\\include\\c90\\stdio.h" 3
+#pragma printf_check(vprintf) const
+#pragma printf_check(vsprintf) const
+
+extern char * gets(char *);
+extern int puts(const char *);
+extern int scanf(const char *, ...) __attribute__((unsupported("scanf() is not supported by this compiler")));
+extern int sscanf(const char *, const char *, ...) __attribute__((unsupported("sscanf() is not supported by this compiler")));
+extern int vprintf(const char *, va_list) __attribute__((unsupported("vprintf() is not supported by this compiler")));
+extern int vsprintf(char *, const char *, va_list) __attribute__((unsupported("vsprintf() is not supported by this compiler")));
+extern int vscanf(const char *, va_list ap) __attribute__((unsupported("vscanf() is not supported by this compiler")));
+extern int vsscanf(const char *, const char *, va_list) __attribute__((unsupported("vsscanf() is not supported by this compiler")));
+
+#pragma printf_check(printf) const
+#pragma printf_check(sprintf) const
+extern int sprintf(char *, const char *, ...);
+extern int printf(const char *, ...);
 # 28 "main.c" 2
 
 
 
 
-unsigned int i;
+
+int ascii[10] = {0, 1, 2, 3, 4, 5, 7, 8, 9};
+unsigned int palabra;
+unsigned char bandera;
+unsigned char selector;
+unsigned char flag;
+unsigned int centena;
+unsigned int decena;
+unsigned int unidad;
+unsigned int pot;
 
 void setup(void);
+void setupADC(void);
 void setupUART(void);
 void cadena(char *cursor);
 
+
+void __attribute__((picinterrupt(("")))) isr(void){
+    if (PIR1bits.ADIF == 1){
+        pot = ADRESH;
+        centena = (pot/100);
+        decena = ((pot/10)%10);
+        unidad = (pot%10);
+        PIR1bits.ADIF = 0;
+        }
+
+}
+
 void main(void){
     setup();
+    setupADC();
     setupUART();
-    cadena("MENU\rHOLA");
-    cadena("HOLA");
     while(1){
+        cadena("\n-------------MENU------------------\n1) Leer Potenciometro\n2) Enviar ASCII\n");
+        bandera = 1;
+        while (bandera == 1){
+                if (PIR1bits.RCIF == 1){
+                selector = RCREG;
+                PIR1bits.RCIF = 0;
+                _delay((unsigned long)((10)*(8000000/4000.0)));}
+            if (selector == '1'){
+                ADCON0bits.GO = 1;
+                _delay((unsigned long)((5)*(8000000/4000.0)));
+                TXREG = ascii[centena]+48;
+                _delay((unsigned long)((5)*(8000000/4000.0)));
+                TXREG = ascii[decena]+48;
+                _delay((unsigned long)((5)*(8000000/4000.0)));
+                TXREG = ascii[unidad]+48;
+                bandera = 0;
+                selector = 0;
+            }
 
-        if(PIR1bits.RCIF == 1){
-            PORTB = RCREG;
-            PIR1bits.RCIF = 0;}
+            if (selector == '2'){
+                cadena("Ingrese caracter (solo un caracter)\n");
+                cadena("\n");
+                flag = 1;
+                PIR1bits.RCIF = 0;
+                while (flag == 1){
+                if (PIR1bits.RCIF == 1 && RCREG != 0){
+                PORTB = RCREG;
+                PIR1bits.RCIF = 0;
+                flag = 0;
+                bandera = 0;
+                selector = 0;}}}
 
-            _delay((unsigned long)((50)*(8000000/4000.0)));
+        }
     }
 }
 
-
-
 void setup(void){
-    ANSEL = 0;
+    ANSEL = 0b00000001;
     ANSELH = 0;
     TRISB = 0;
     PORTB = 0;
     TRISD = 0;
     PORTD = 0;
+
+    OSCCONbits.IRCF = 0b111;
+    OSCCONbits.SCS = 1;
+
+    INTCONbits.GIE = 1;
+    INTCONbits.PEIE = 1;
+    PIE1bits.ADIE = 1;
+    PIR1bits.ADIF = 0;
+    PIE1bits.RCIE = 0;
+}
+
+void setupADC(void){
+    ADCON0bits.ADCS1 = 1;
+    ADCON0bits.ADCS0 = 0;
+
+    ADCON1bits.VCFG1 = 0;
+    ADCON1bits.VCFG0 = 0;
+
+    ADCON1bits.ADFM = 0;
+
+    ADCON0bits.CHS3 = 0;
+    ADCON0bits.CHS2 = 0;
+    ADCON0bits.CHS1 = 0;
+    ADCON0bits.CHS0 = 0;
+
+    ADCON0bits.ADON = 1;
+    _delay((unsigned long)((100)*(8000000/4000000.0)));
 }
 
 void setupUART(void){
