@@ -2819,8 +2819,6 @@ void setup(void){
     ANSELH = 0;
     TRISB = 0;
     PORTB = 0;
-    TRISD = 0;
-    PORTD = 0;
 
     OSCCONbits.IRCF = 0b111;
     OSCCONbits.SCS = 1;
@@ -2829,7 +2827,6 @@ void setup(void){
     INTCONbits.PEIE = 1;
     PIE1bits.ADIE = 1;
     PIR1bits.ADIF = 0;
-    PIE1bits.RCIE = 0;
 }
 
 void setupADC(void){
@@ -2868,6 +2865,7 @@ void setupUART(void){
     PIR1bits.TXIF = 0;
     RCSTAbits.CREN = 1;
 }
+
 
 void cadena(char *cursor){
     while (*cursor != '\0'){

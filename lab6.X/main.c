@@ -1,7 +1,7 @@
 /*
  * File:   main.c
  * Author: Andrés Lemus
- * Laboratorio 5
+ * Laboratorio 6
  * Created on October 23, 2022, 08:00 AM
  */
 // PIC16F887 Configuration Bit Settings
@@ -60,9 +60,9 @@ void __interrupt() isr(void){
 void main(void){
     setup(); //llamar a función de setup
     setupADC(); //llamar a función de setup del ADC
-    setupUART(); //llamar a función de setup del UART       
-    while(1){ 
-        cadena("\n-------------MENU------------------\n1) Leer Potenciometro\n2) Enviar ASCII\n"); //imprimir menu
+    setupUART(); //llamar a función de setup del UART
+    while(1){
+        cadena("\n\r-------------MENU------------------\n\r1) Leer Potenciometro\n\r2) Enviar ASCII\n\r"); //imprimir menu
         bandera = 1; //encender bandera
         while (bandera == 1){
                 if (PIR1bits.RCIF == 1){ //revisar bandera de si el recibidor esta lleno 
@@ -82,8 +82,8 @@ void main(void){
             }
             
             if (selector == '2'){ //revisar si se selecciono 2
-                cadena("Ingrese caracter (solo un caracter)\n"); //mostrar informacion
-                cadena("\n"); //enter
+                cadena("Ingrese caracter (solo un caracter)\n\r"); //mostrar informacion
+                cadena("\n\r"); //enter
                 flag = 1; //encender bandera para esperar que se introduzca tecla
                 PIR1bits.RCIF = 0; //limpiar bandera 
                 while (flag == 1){ //loop

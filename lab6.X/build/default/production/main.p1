@@ -73,12 +73,6 @@ Version 4.0 HI-TECH Software Intermediate Code
 "1479
 [; ;E:/Program Files/Microchip/MPLABX/v6.00/packs/Microchip/PIC16Fxxx_DFP/1.3.42/xc8\pic\include\proc\pic16f887.h: 1479: extern volatile unsigned char TRISB __attribute__((address(0x086)));
 [v _TRISB `Vuc ~T0 @X0 0 e@134 ]
-"1603
-[; ;E:/Program Files/Microchip/MPLABX/v6.00/packs/Microchip/PIC16Fxxx_DFP/1.3.42/xc8\pic\include\proc\pic16f887.h: 1603: extern volatile unsigned char TRISD __attribute__((address(0x088)));
-[v _TRISD `Vuc ~T0 @X0 0 e@136 ]
-"353
-[; ;E:/Program Files/Microchip/MPLABX/v6.00/packs/Microchip/PIC16Fxxx_DFP/1.3.42/xc8\pic\include\proc\pic16f887.h: 353: extern volatile unsigned char PORTD __attribute__((address(0x008)));
-[v _PORTD `Vuc ~T0 @X0 0 e@8 ]
 "1869
 [; ;E:/Program Files/Microchip/MPLABX/v6.00/packs/Microchip/PIC16Fxxx_DFP/1.3.42/xc8\pic\include\proc\pic16f887.h: 1869:     struct {
 [s S70 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :3 `uc 1 ]
@@ -677,143 +671,134 @@ Version 4.0 HI-TECH Software Intermediate Code
 "105
 [; ;main.c: 105:     PORTB = 0;
 [e = _PORTB -> -> 0 `i `uc ]
-"106
-[; ;main.c: 106:     TRISD = 0;
-[e = _TRISD -> -> 0 `i `uc ]
 "107
-[; ;main.c: 107:     PORTD = 0;
-[e = _PORTD -> -> 0 `i `uc ]
-"109
-[; ;main.c: 109:     OSCCONbits.IRCF = 0b111;
+[; ;main.c: 107:     OSCCONbits.IRCF = 0b111;
 [e = . . _OSCCONbits 0 4 -> -> 7 `i `uc ]
-"110
-[; ;main.c: 110:     OSCCONbits.SCS = 1;
+"108
+[; ;main.c: 108:     OSCCONbits.SCS = 1;
 [e = . . _OSCCONbits 0 0 -> -> 1 `i `uc ]
-"112
-[; ;main.c: 112:     INTCONbits.GIE = 1;
+"110
+[; ;main.c: 110:     INTCONbits.GIE = 1;
 [e = . . _INTCONbits 0 7 -> -> 1 `i `uc ]
-"113
-[; ;main.c: 113:     INTCONbits.PEIE = 1;
+"111
+[; ;main.c: 111:     INTCONbits.PEIE = 1;
 [e = . . _INTCONbits 0 6 -> -> 1 `i `uc ]
-"114
-[; ;main.c: 114:     PIE1bits.ADIE = 1;
+"112
+[; ;main.c: 112:     PIE1bits.ADIE = 1;
 [e = . . _PIE1bits 0 6 -> -> 1 `i `uc ]
-"115
-[; ;main.c: 115:     PIR1bits.ADIF = 0;
+"113
+[; ;main.c: 113:     PIR1bits.ADIF = 0;
 [e = . . _PIR1bits 0 6 -> -> 0 `i `uc ]
-"116
-[; ;main.c: 116:     PIE1bits.RCIE = 0;
-[e = . . _PIE1bits 0 5 -> -> 0 `i `uc ]
-"117
-[; ;main.c: 117: }
+"114
+[; ;main.c: 114: }
 [e :UE 155 ]
 }
-"119
-[; ;main.c: 119: void setupADC(void){
+"116
+[; ;main.c: 116: void setupADC(void){
 [v _setupADC `(v ~T0 @X0 1 ef ]
 {
 [e :U _setupADC ]
 [f ]
-"120
-[; ;main.c: 120:     ADCON0bits.ADCS1 = 1;
+"117
+[; ;main.c: 117:     ADCON0bits.ADCS1 = 1;
 [e = . . _ADCON0bits 1 7 -> -> 1 `i `uc ]
-"121
-[; ;main.c: 121:     ADCON0bits.ADCS0 = 0;
+"118
+[; ;main.c: 118:     ADCON0bits.ADCS0 = 0;
 [e = . . _ADCON0bits 1 6 -> -> 0 `i `uc ]
-"123
-[; ;main.c: 123:     ADCON1bits.VCFG1 = 0;
+"120
+[; ;main.c: 120:     ADCON1bits.VCFG1 = 0;
 [e = . . _ADCON1bits 0 2 -> -> 0 `i `uc ]
-"124
-[; ;main.c: 124:     ADCON1bits.VCFG0 = 0;
+"121
+[; ;main.c: 121:     ADCON1bits.VCFG0 = 0;
 [e = . . _ADCON1bits 0 1 -> -> 0 `i `uc ]
-"126
-[; ;main.c: 126:     ADCON1bits.ADFM = 0;
+"123
+[; ;main.c: 123:     ADCON1bits.ADFM = 0;
 [e = . . _ADCON1bits 0 4 -> -> 0 `i `uc ]
-"128
-[; ;main.c: 128:     ADCON0bits.CHS3 = 0;
+"125
+[; ;main.c: 125:     ADCON0bits.CHS3 = 0;
 [e = . . _ADCON0bits 1 5 -> -> 0 `i `uc ]
-"129
-[; ;main.c: 129:     ADCON0bits.CHS2 = 0;
+"126
+[; ;main.c: 126:     ADCON0bits.CHS2 = 0;
 [e = . . _ADCON0bits 1 4 -> -> 0 `i `uc ]
-"130
-[; ;main.c: 130:     ADCON0bits.CHS1 = 0;
+"127
+[; ;main.c: 127:     ADCON0bits.CHS1 = 0;
 [e = . . _ADCON0bits 1 3 -> -> 0 `i `uc ]
-"131
-[; ;main.c: 131:     ADCON0bits.CHS0 = 0;
+"128
+[; ;main.c: 128:     ADCON0bits.CHS0 = 0;
 [e = . . _ADCON0bits 1 2 -> -> 0 `i `uc ]
-"133
-[; ;main.c: 133:     ADCON0bits.ADON = 1;
+"130
+[; ;main.c: 130:     ADCON0bits.ADON = 1;
 [e = . . _ADCON0bits 0 0 -> -> 1 `i `uc ]
-"134
-[; ;main.c: 134:     _delay((unsigned long)((100)*(8000000/4000000.0)));
+"131
+[; ;main.c: 131:     _delay((unsigned long)((100)*(8000000/4000000.0)));
 [e ( __delay (1 -> * -> -> 100 `i `d / -> -> 8000000 `l `d .4000000.0 `ul ]
-"135
-[; ;main.c: 135: }
+"132
+[; ;main.c: 132: }
 [e :UE 156 ]
 }
-"137
-[; ;main.c: 137: void setupUART(void){
+"134
+[; ;main.c: 134: void setupUART(void){
 [v _setupUART `(v ~T0 @X0 1 ef ]
 {
 [e :U _setupUART ]
 [f ]
-"140
-[; ;main.c: 140:     SPBRG = 12;
+"137
+[; ;main.c: 137:     SPBRG = 12;
 [e = _SPBRG -> -> 12 `i `uc ]
-"144
-[; ;main.c: 144:     TXSTAbits.SYNC = 0;
+"141
+[; ;main.c: 141:     TXSTAbits.SYNC = 0;
 [e = . . _TXSTAbits 0 4 -> -> 0 `i `uc ]
-"145
-[; ;main.c: 145:     RCSTAbits.SPEN = 1;
+"142
+[; ;main.c: 142:     RCSTAbits.SPEN = 1;
 [e = . . _RCSTAbits 0 7 -> -> 1 `i `uc ]
-"151
-[; ;main.c: 151:     TXSTAbits.TXEN = 1;
+"148
+[; ;main.c: 148:     TXSTAbits.TXEN = 1;
 [e = . . _TXSTAbits 0 5 -> -> 1 `i `uc ]
-"152
-[; ;main.c: 152:     PIR1bits.TXIF = 0;
+"149
+[; ;main.c: 149:     PIR1bits.TXIF = 0;
 [e = . . _PIR1bits 0 4 -> -> 0 `i `uc ]
-"153
-[; ;main.c: 153:     RCSTAbits.CREN = 1;
+"150
+[; ;main.c: 150:     RCSTAbits.CREN = 1;
 [e = . . _RCSTAbits 0 4 -> -> 1 `i `uc ]
-"154
-[; ;main.c: 154: }
+"151
+[; ;main.c: 151: }
 [e :UE 157 ]
 }
-"156
-[; ;main.c: 156: void cadena(char *cursor){
+"154
+[; ;main.c: 154: void cadena(char *cursor){
 [v _cadena `(v ~T0 @X0 1 ef1`*uc ]
 {
 [e :U _cadena ]
 [v _cursor `*uc ~T0 @X0 1 r1 ]
 [f ]
-"157
-[; ;main.c: 157:     while (*cursor != '\0'){
+"155
+[; ;main.c: 155:     while (*cursor != '\0'){
 [e $U 159  ]
 [e :U 160 ]
 {
-"158
-[; ;main.c: 158:         while (PIR1bits.TXIF == 0);
+"156
+[; ;main.c: 156:         while (PIR1bits.TXIF == 0);
 [e $U 162  ]
 [e :U 163 ]
 [e :U 162 ]
 [e $ == -> . . _PIR1bits 0 4 `i -> 0 `i 163  ]
 [e :U 164 ]
-"159
-[; ;main.c: 159:             TXREG = *cursor;
+"157
+[; ;main.c: 157:             TXREG = *cursor;
 [e = _TXREG -> *U _cursor `uc ]
-"160
-[; ;main.c: 160:             *cursor++;
+"158
+[; ;main.c: 158:             *cursor++;
 [e *U ++ _cursor * -> -> 1 `i `x -> -> # *U _cursor `i `x ]
-"161
-[; ;main.c: 161:     }
+"159
+[; ;main.c: 159:     }
 }
 [e :U 159 ]
-"157
-[; ;main.c: 157:     while (*cursor != '\0'){
+"155
+[; ;main.c: 155:     while (*cursor != '\0'){
 [e $ != -> *U _cursor `ui -> 0 `ui 160  ]
 [e :U 161 ]
-"162
-[; ;main.c: 162: }
+"160
+[; ;main.c: 160: }
 [e :UE 158 ]
 }
 [a 1C 10 45 45 45 45 45 45 45 45 45 45 45 45 45 77 69 78 85 45 45 45 45 45 45 45 45 45 45 45 45 45 45 45 45 45 45 10 49 41 32 76 101 101 114 32 80 111 116 101 110 99 105 111 109 101 116 114 111 10 50 41 32 69 110 118 105 97 114 32 65 83 67 73 73 10 0 ]
