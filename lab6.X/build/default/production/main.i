@@ -2778,7 +2778,7 @@ void main(void){
     setupADC();
     setupUART();
     while(1){
-        cadena("\n-------------MENU------------------\n1) Leer Potenciometro\n2) Enviar ASCII\n");
+        cadena("\n\r-------------MENU------------------\n\r1) Leer Potenciometro\n\r2) Enviar ASCII\n\r");
         bandera = 1;
         while (bandera == 1){
                 if (PIR1bits.RCIF == 1){
@@ -2798,8 +2798,8 @@ void main(void){
             }
 
             if (selector == '2'){
-                cadena("Ingrese caracter (solo un caracter)\n");
-                cadena("\n");
+                cadena("Ingrese caracter (solo un caracter)\n\r");
+                cadena("\n\r");
                 flag = 1;
                 PIR1bits.RCIF = 0;
                 while (flag == 1){

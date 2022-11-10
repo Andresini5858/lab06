@@ -523,7 +523,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 [e :U 143 ]
 {
 "65
-[; ;main.c: 65:         cadena("\n-------------MENU------------------\n1) Leer Potenciometro\n2) Enviar ASCII\n");
+[; ;main.c: 65:         cadena("\n\r-------------MENU------------------\n\r1) Leer Potenciometro\n\r2) Enviar ASCII\n\r");
 [e ( _cadena (1 :s 1C ]
 "66
 [; ;main.c: 66:         bandera = 1;
@@ -588,10 +588,10 @@ Version 4.0 HI-TECH Software Intermediate Code
 [e $ ! == -> _selector `ui -> 50 `ui 150  ]
 {
 "85
-[; ;main.c: 85:                 cadena("Ingrese caracter (solo un caracter)\n");
+[; ;main.c: 85:                 cadena("Ingrese caracter (solo un caracter)\n\r");
 [e ( _cadena (1 :s 2C ]
 "86
-[; ;main.c: 86:                 cadena("\n");
+[; ;main.c: 86:                 cadena("\n\r");
 [e ( _cadena (1 :s 3C ]
 "87
 [; ;main.c: 87:                 flag = 1;
@@ -801,6 +801,6 @@ Version 4.0 HI-TECH Software Intermediate Code
 [; ;main.c: 160: }
 [e :UE 158 ]
 }
-[a 1C 10 45 45 45 45 45 45 45 45 45 45 45 45 45 77 69 78 85 45 45 45 45 45 45 45 45 45 45 45 45 45 45 45 45 45 45 10 49 41 32 76 101 101 114 32 80 111 116 101 110 99 105 111 109 101 116 114 111 10 50 41 32 69 110 118 105 97 114 32 65 83 67 73 73 10 0 ]
-[a 2C 73 110 103 114 101 115 101 32 99 97 114 97 99 116 101 114 32 40 115 111 108 111 32 117 110 32 99 97 114 97 99 116 101 114 41 10 0 ]
-[a 3C 10 0 ]
+[a 1C 10 13 45 45 45 45 45 45 45 45 45 45 45 45 45 77 69 78 85 45 45 45 45 45 45 45 45 45 45 45 45 45 45 45 45 45 45 10 13 49 41 32 76 101 101 114 32 80 111 116 101 110 99 105 111 109 101 116 114 111 10 13 50 41 32 69 110 118 105 97 114 32 65 83 67 73 73 10 13 0 ]
+[a 2C 73 110 103 114 101 115 101 32 99 97 114 97 99 116 101 114 32 40 115 111 108 111 32 117 110 32 99 97 114 97 99 116 101 114 41 10 13 0 ]
+[a 3C 10 13 0 ]
